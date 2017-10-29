@@ -239,7 +239,7 @@ SignaturePad.prototype._createPoint = function (x, y, time) {
   return new Point(
     x - rect.left,
     y - rect.top,
-    time || new Date().getTime(),
+    time || new Date().getTime()
   );
 };
 
@@ -435,10 +435,10 @@ SignaturePad.prototype._toSVG = function () {
           !isNaN(curve.control1.y) &&
           !isNaN(curve.control2.x) &&
           !isNaN(curve.control2.y)) {
-        const attr = `M ${curve.startPoint.x.toFixed(3)},${curve.startPoint.y.toFixed(3)} `
-                   + `C ${curve.control1.x.toFixed(3)},${curve.control1.y.toFixed(3)} `
-                   + `${curve.control2.x.toFixed(3)},${curve.control2.y.toFixed(3)} `
-                   + `${curve.endPoint.x.toFixed(3)},${curve.endPoint.y.toFixed(3)}`;
+        const attr = 'M ${curve.startPoint.x.toFixed(3)},${curve.startPoint.y.toFixed(3)} '
+                   + 'C ${curve.control1.x.toFixed(3)},${curve.control1.y.toFixed(3)} '
+                   + '${curve.control2.x.toFixed(3)},${curve.control2.y.toFixed(3)} '
+                   + '${curve.endPoint.x.toFixed(3)},${curve.endPoint.y.toFixed(3)}';
 
         path.setAttribute('d', attr);
         path.setAttribute('stroke-width', (widths.end * 2.25).toFixed(3));
@@ -458,16 +458,16 @@ SignaturePad.prototype._toSVG = function () {
       circle.setAttribute('fill', rawPoint.color);
 
       svg.appendChild(circle);
-    },
+    }
   );
 
   const prefix = 'data:image/svg+xml;base64,';
   const header = '<svg'
     + ' xmlns="http://www.w3.org/2000/svg"'
     + ' xmlns:xlink="http://www.w3.org/1999/xlink"'
-    + ` viewBox="${minX} ${minY} ${maxX} ${maxY}"`
-    + ` width="${maxX}"`
-    + ` height="${maxY}"`
+    + ' viewBox="${minX} ${minY} ${maxX} ${maxY}"'
+    + ' width="${maxX}"'
+    + ' height="${maxY}"'
     + '>';
   let body = svg.innerHTML;
 
@@ -496,7 +496,7 @@ SignaturePad.prototype.fromData = function (pointGroups) {
   this._fromData(
     pointGroups,
     (curve, widths) => this._drawCurve(curve, widths.start, widths.end),
-    rawPoint => this._drawDot(rawPoint),
+    rawPoint => this._drawDot(rawPoint)
   );
 
   this._data = pointGroups;

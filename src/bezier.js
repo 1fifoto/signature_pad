@@ -19,14 +19,14 @@ Bezier.prototype.length = function () {
       this.startPoint.x,
       this.control1.x,
       this.control2.x,
-      this.endPoint.x,
+      this.endPoint.x
     );
     const cy = this._point(
       t,
       this.startPoint.y,
       this.control1.y,
       this.control2.y,
-      this.endPoint.y,
+      this.endPoint.y
     );
     if (i > 0) {
       const xdiff = cx - px;
