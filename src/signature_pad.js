@@ -112,10 +112,10 @@ SignaturePad.prototype.fromDataURL = function (dataUrl, options = {}) {
 
 SignaturePad.prototype.toDataURL = function (type, ...options) {
   switch (type) {
-    case 'text/csv':
-      return this._toCSV();
     case 'image/svg+xml':
       return this._toSVG();
+    case 'text/csv':
+      return this._toCSV();
     default:
       return this._canvas.toDataURL(type, ...options);
   }

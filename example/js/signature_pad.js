@@ -226,10 +226,10 @@ SignaturePad.prototype.toDataURL = function (type) {
   var _canvas;
 
   switch (type) {
-    case 'text/csv':
-      return this._toCSV();
     case 'image/svg+xml':
       return this._toSVG();
+    case 'text/csv':
+      return this._toCSV();
     default:
       for (var _len = arguments.length, options = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
         options[_key - 1] = arguments[_key];
@@ -597,42 +597,42 @@ SignaturePad.prototype._toSVG = function () {
 };
 
 SignaturePad.prototype._toCSV = function () {
-	  var _this4 = this;
+  var _this4 = this;
 
-	  var pointGroups = this._data;
+  var pointGroups = this._data;
 	  
-	  var prefix = 'data:text/csv;base64,';
+  var prefix = 'data:text/csv;base64,';
 
-	  var data = '';
-	  this._fromData(
-	    pointGroups,
-	    (curve, widths, color) => {
-	      // Need to check curve for NaN values, these pop up when drawing
-	      // lines on the canvas that are not continuous. E.g. Sharp corners
-	      // or stopping mid-stroke and than continuing without lifting mouse.
-	      if (!isNaN(curve.control1.x) &&
-	          !isNaN(curve.control1.y) &&
-	          !isNaN(curve.control2.x) &&
-	          !isNaN(curve.control2.y)) {
-	        data += 'path,'
-	             + curve.startPoint.x.toFixed(3) + ',' + curve.startPoint.y.toFixed(3) + ','
-	             + curve.control1.x.toFixed(3) + ',' + curve.control1.y.toFixed(3) + ','
-	             + curve.control2.x.toFixed(3) + ',' + curve.control2.y.toFixed(3) + ','
-	             + curve.endPoint.x.toFixed(3) + ',' + curve.endPoint.y.toFixed(3) + ','
-	             + widths.start.toFixed(3) + ',' + widths.end.toFixed(3) + ',' + color + '\r\n';
-	      }
-	    },
-	    (rawPoint) => {
-	      const dotSize = (typeof _this4.dotSize) === 'function' ? _this4.dotSize() : _this4.dotSize;
-	      data += 'circle,'
-	           + dotSize + ','
-	           + rawPoint.x.toFixed(3) + ',' + rawPoint.y.toFixed(3) + ','
-	           + rawPoint.color + '\r\n';
-	    }
-	  );
+  var data = '';
+  this._fromData(
+    pointGroups,
+    (curve, widths, color) => {
+      // Need to check curve for NaN values, these pop up when drawing
+      // lines on the canvas that are not continuous. E.g. Sharp corners
+      // or stopping mid-stroke and than continuing without lifting mouse.
+      if (!isNaN(curve.control1.x) &&
+          !isNaN(curve.control1.y) &&
+          !isNaN(curve.control2.x) &&
+          !isNaN(curve.control2.y)) {
+        data += 'path,'
+             + curve.startPoint.x.toFixed(3) + ',' + curve.startPoint.y.toFixed(3) + ','
+             + curve.control1.x.toFixed(3) + ',' + curve.control1.y.toFixed(3) + ','
+             + curve.control2.x.toFixed(3) + ',' + curve.control2.y.toFixed(3) + ','
+             + curve.endPoint.x.toFixed(3) + ',' + curve.endPoint.y.toFixed(3) + ','
+             + widths.start.toFixed(3) + ',' + widths.end.toFixed(3) + ',' + color + '\r\n';
+      }
+    },
+    (rawPoint) => {
+      const dotSize = (typeof _this4.dotSize) === 'function' ? _this4.dotSize() : _this4.dotSize;
+      data += 'circle,'
+           + dotSize + ','
+           + rawPoint.x.toFixed(3) + ',' + rawPoint.y.toFixed(3) + ','
+           + rawPoint.color + '\r\n';
+    }
+  );
 
-	  return prefix + btoa(data);
-	};
+  return prefix + btoa(data);
+};
 
 SignaturePad.prototype.fromData = function (pointGroups) {
   var _this3 = this;
