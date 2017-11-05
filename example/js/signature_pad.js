@@ -597,39 +597,17 @@ SignaturePad.prototype._toSVG = function () {
 };
 
 SignaturePad.prototype._toCSV = function () {
-  var _this4 = this;
-
   var pointGroups = this._data;
-	  
   var prefix = 'data:text/csv;base64,';
-
   var data = '';
-  this._fromData(
-    pointGroups,
-    (curve, widths, color) => {
-      // Need to check curve for NaN values, these pop up when drawing
-      // lines on the canvas that are not continuous. E.g. Sharp corners
-      // or stopping mid-stroke and than continuing without lifting mouse.
-      if (!isNaN(curve.control1.x) &&
-          !isNaN(curve.control1.y) &&
-          !isNaN(curve.control2.x) &&
-          !isNaN(curve.control2.y)) {
-        data += 'path,'
-             + curve.startPoint.x.toFixed(3) + ',' + curve.startPoint.y.toFixed(3) + ','
-             + curve.control1.x.toFixed(3) + ',' + curve.control1.y.toFixed(3) + ','
-             + curve.control2.x.toFixed(3) + ',' + curve.control2.y.toFixed(3) + ','
-             + curve.endPoint.x.toFixed(3) + ',' + curve.endPoint.y.toFixed(3) + ','
-             + widths.start.toFixed(3) + ',' + widths.end.toFixed(3) + ',' + color + '\r\n';
-      }
-    },
-    (rawPoint) => {
-      const dotSize = (typeof _this4.dotSize) === 'function' ? _this4.dotSize() : _this4.dotSize;
-      data += 'circle,'
-           + dotSize + ','
-           + rawPoint.x.toFixed(3) + ',' + rawPoint.y.toFixed(3) + ','
-           + rawPoint.color + '\r\n';
+
+  for (var i = 0; i < pointGroups.length; i += 1) {
+    var group = pointGroups[i];
+    for (var j = 0; j < group.length; j += 1) {
+      var rawPoint = group[j];
+      data += i + ',' + rawPoint.x + ',' + rawPoint.y + ',' + rawPoint.time + ',' + rawPoint.color + '\r\n';
     }
-  );
+  }
 
   return prefix + btoa(data);
 };
