@@ -44,9 +44,10 @@ var canvas = document.querySelector("canvas");
 var signaturePad = new SignaturePad(canvas);
 
 // Returns signature image as data URL (see https://mdn.io/todataurl for the list of possible parameters)
-signaturePad.toDataURL(); // save image as PNG
-signaturePad.toDataURL("image/jpeg"); // save image as JPEG
-signaturePad.toDataURL("image/svg+xml"); // save image as SVG
+signaturePad.toDataURL(); // save signature as PNG
+signaturePad.toDataURL("image/jpeg"); // save signature as JPEG
+signaturePad.toDataURL("image/svg+xml"); // save signature as SVG
+signaturePad.toDataURL("text/csv"); // save signature as CSV
 
 // Draws signature image from data URL.
 // NOTE: This method does not populate internal data structure that represents drawn signature. Thus, after using #fromDataURL, #toData won't work properly.

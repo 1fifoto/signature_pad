@@ -5,6 +5,7 @@ var undoButton = wrapper.querySelector("[data-action=undo]");
 var savePNGButton = wrapper.querySelector("[data-action=save-png]");
 var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
 var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+var saveCSVButton = wrapper.querySelector("[data-action=save-csv]");
 var canvas = wrapper.querySelector("canvas");
 var signaturePad = new SignaturePad(canvas, {
   // It's Necessary to use an opaque color when saving image as JPEG;
@@ -117,5 +118,14 @@ saveSVGButton.addEventListener("click", function (event) {
   } else {
     var dataURL = signaturePad.toDataURL('image/svg+xml');
     download(dataURL, "signature.svg");
+  }
+});
+
+saveCSVButton.addEventListener("click", function (event) {
+  if (signaturePad.isEmpty()) {
+    alert("Please provide a signature first.");
+  } else {
+    var dataURL = signaturePad.toDataURL('text/csv');
+    download(dataURL, "signature.csv");
   }
 });
